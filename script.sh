@@ -32,5 +32,5 @@ fi
 
 # Avoid subshell using exec
 # http://tldp.org/LDP/abs/html/x17974.html
-javaOpts=""
-exec java $javaOpts -Djava.awt.headless=true -jar "$progdir/$jarfile" "$@"
+javaOpts="-Dio.swagger.parser.util.RemoteUrl.trustAll=true -Djava.awt.headless=true"
+exec java $javaOpts -jar "$progdir/$jarfile" "$@"
