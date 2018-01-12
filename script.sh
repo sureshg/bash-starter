@@ -49,5 +49,6 @@ if ! ( command_exists docker && [ -e /var/run/docker.sock ] ); then
 fi
 
 # Run docker 
+echo -e "\n Using Docker $(docker version)"
 echo -e "\nRunning bundle install using '$PWD/Gemfile'...\n"
-docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.0.0 echo $(ruby -v) ; echo "RubyGems: $(gem --version)" ; time bundle install
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.0.0 /bin/bash -c 'echo $(ruby -v) ; echo "RubyGems: $(gem --version)" ; time bundle install'
