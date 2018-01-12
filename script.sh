@@ -47,3 +47,7 @@ if ! ( command_exists docker && [ -e /var/run/docker.sock ] ); then
 	echo "Docker doesn't exists on the system. Install docker and run again!!"
     exit 1
 fi
+
+# Run docker 
+echo -e "\nRunning bundle install using '$PWD/Gemfile'...\n"
+docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.0.0 echo $(ruby -v) ; echo "RubyGems: $(gem --version)" ; time bundle install
