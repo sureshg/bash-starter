@@ -20,6 +20,7 @@ progdir=$(dirname "${prog}")
 
 # Echo with color
 # echo -e "\n\xF0\x9F\x8D\xBB  Hello \e[36mWorld\e[0m..."
+# printf "Print\nWith\nNewLine"
 
 # Check file exists
 # http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html
@@ -34,3 +35,15 @@ fi
 # http://tldp.org/LDP/abs/html/x17974.html
 javaOpts="-Dio.swagger.parser.util.RemoteUrl.trustAll=true -Djava.awt.headless=true"
 exec java $javaOpts -jar "$progdir/$jarfile" "$@"
+
+# Checks if the command exists.
+command_exists() {
+	command -v "$@" > /dev/null 2>&1
+}
+
+# Negating multiple conditions
+# https://stackoverflow.com/a/33010770/416868
+if ! ( command_exists docker && [ -e /var/run/docker.sock ] ); then
+	echo "Docker doesn't exists on the system. Install docker and run again!!"
+    exit 1
+fi
