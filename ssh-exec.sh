@@ -16,8 +16,8 @@ for ip in ${ips[@]}; do
     printf "\nSCP into : ${ip}\n"
     echo   "---------------------"
 
-    scp -o ConnectTimeout=1 -o ConnectionAttempts=1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ${from_file} ooadmin@${ip}:${to_dir}
-    ssh -t -t -o ConnectTimeout=1 -o ConnectionAttempts=1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ooadmin@${ip} <<CMD
+    scp -o ConnectTimeout=1 -o ConnectionAttempts=1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  ${from_file} xxxx@${ip}:${to_dir}
+    ssh -t -t -o ConnectTimeout=1 -o ConnectionAttempts=1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null xxxx@${ip} <<CMD
 sudo su -
 cd ${to_dir}
 rm -rf "${to_file}_bak"
