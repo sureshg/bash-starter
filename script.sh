@@ -16,11 +16,34 @@ set -eu
 # http://tldp.org/LDP/abs/html/internalvariables.html
 prog="$0"
 progdir=$(dirname "${prog}")
+# Get the absolute path
+abs_path=$(realpath ${prog})
+
+## Set mydir to the directory containing the script
+## The ${var%pattern} format will remove the shortest match of
+## pattern from the end of the string. Here, it will remove the
+## script's name,. leaving only the directory. 
+mydir="${0%/*}"
 
 
 # Echo with color
-# echo -e "\n\xF0\x9F\x8D\xBB  Hello \e[36mWorld\e[0m..."
-# printf "Print\nWith\nNewLine"
+# https://stackoverflow.com/a/28938235/416868
+echo -e "\n\xF0\x9F\x8D\xBB  Hello \e[36mWorld\e[0m..."
+echo -e "\033[1;32m BOLD GREEN \033[0m"
+echo -e "\n\033[1;37mNative binary is: \033[1;32m$(realpath ${bin_name})\033[0m"
+# Newlines.
+printf "Print\nWith\nNewLine"
+echo -e "Hello\nworld"
+echo
+
+# Prevent printing dir stack.
+pushd ${project_dir} > /dev/null
+popd > /dev/null
+
+# File size
+size_in_bytes=$(stat -f%z ${file})
+size_str=$(du -sh $filename)
+file_type=$(file ${bin_name})
 
 # Check file exists
 # http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html
@@ -52,3 +75,15 @@ fi
 echo -e "\n Using Docker $(docker version)"
 echo -e "\nRunning bundle install using '$PWD/Gemfile'...\n"
 docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.0.0 /bin/bash -c 'echo $(ruby -v) ; echo "RubyGems: $(gem --version)" ; time bundle install'
+
+
+# Multiline echo
+cat << 'EOF'
+Seems like GraalVM is not installed or setup properly on this machine.
+Download GraalVM from https://www.graalvm.org/downloads/ and set the
+path variable,
+
+ export GRAAL_HOME=/graalvm/install/path/
+ export JAVA_HOME=$GRAAL_HOME
+ export PATH=$JAVA_HOME/bin:$PATH
+EOF
