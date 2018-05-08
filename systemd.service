@@ -1,0 +1,36 @@
+# Sample java service Systemd Unit File
+#######################################
+
+[Unit]
+Description=Java sample application
+Documentation=https://sureshg.io
+After=network.target syslog.target ntpd.service
+Wants=ntpd.service
+
+[Service]
+Type=simple
+# PIDFile=/var/run/service.pid
+Environment=KEY1=VAL1
+Environment=KEy2=VAl2
+EnvironmentFile=-/path/to/env/file
+WorkingDirectory=/path/to/dir
+ExecStart=/bin/java -server \
+                    -Xms2000m -Xmx6000m \
+                    -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:InitiatingHeapOccupancyPercent=70 \
+                    -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:/path/to/gc.log  \
+                    -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=15 -XX:GCLogFileSize=10M \
+                    -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/path/to/heap.hprof \
+                    -jar /path/to/app.jar
+ExecReload=/bin/kill -s HUP $MAINPID
+SuccessExitStatus=143
+KillMode=process
+Restart=on-failure
+RestartSec=3s
+User=root
+Group=root
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target

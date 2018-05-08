@@ -87,3 +87,17 @@ path variable,
  export JAVA_HOME=$GRAAL_HOME
  export PATH=$JAVA_HOME/bin:$PATH
 EOF
+
+
+# Hashtable using array
+hash=(
+    'k1::v1'
+    'k2::v2'
+    'k3::v3'
+)
+
+for index in "${hash[@]}" ; do
+    key="${index%%::*}"
+    value="${index##*::}"
+    echo -e "\033[36m$key\033[0m => \033[36m$value\033[0m"
+done
