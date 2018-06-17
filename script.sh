@@ -78,6 +78,7 @@ docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app ruby:2.0.0 /bin/bash -c '
 
 
 # Multiline echo
+# --------------
 cat << 'EOF'
 Seems like GraalVM is not installed or setup properly on this machine.
 Download GraalVM from https://www.graalvm.org/downloads/ and set the
@@ -89,7 +90,31 @@ path variable,
 EOF
 
 
+# Multiline echo without cat & without needing to escape the quotes.
+# Putting quotes around the sentinel (EOF) prevents the text from
+# undergoing parameter expansion.
+# -----------------------------------------------------------------
+
+IFS='' read -r -d '' content <<"EOF"
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'open-uri'
+
+hostname = `hostname`
+ip_address = `hostname -i`
+
+puts "From Ruby >> Hostname: #{hostname}, IP Address: #{ip_address}"
+EOF
+
+# Print without line breaks
+echo ${content}
+
+# Print without line breaks
+echo "$content"
+
 # Hashtable using array
+# ---------------------
 hash=(
     'k1::v1'
     'k2::v2'
