@@ -126,3 +126,13 @@ for index in "${hash[@]}" ; do
     value="${index##*::}"
     echo -e "\033[36m$key\033[0m => \033[36m$value\033[0m"
 done
+
+# SSH Local Port forwarding (https://git.io/fFY85)
+local_port=1443
+if lsof -Pi :${local_port} -sTCP:LISTEN -t >/dev/null ; then
+    echo "SSH tunnel is already established!"
+else
+    echo "SSH local port forwarding."
+    nohup ssh -Cfo ExitOnForwardFailure=yes -N user@remotehost -L ${local_port}:${apihost}:443
+    sleep 6s
+fi
