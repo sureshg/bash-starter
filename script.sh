@@ -136,3 +136,8 @@ else
     nohup ssh -Cfo ExitOnForwardFailure=yes -N user@remotehost -L ${local_port}:${apihost}:443
     sleep 6s
 fi
+
+
+# Extract tar.gz from a file/URL
+curl -L https://github.com/istio/fortio/releases/download/v1.1.0/fortio-linux_x64-1.1.0.tgz \
+ | sudo tar -C / -xvzpf -
