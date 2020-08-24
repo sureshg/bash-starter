@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Streaming download and extract
-# curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz -
+# Usage: ./openjdk-ea.sh [loom | 16 | 17 | ..]
+#
+# Can also use the below command for streaming download and extract
+# $ curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz -
 
 set -eu
 
