@@ -25,6 +25,8 @@ abs_path=$(realpath ${prog})
 ## script's name,. leaving only the directory. 
 mydir="${0%/*}"
 
+# Default value
+jdk_version=${1:-loom}
 
 # Echo with color
 # https://stackoverflow.com/a/28938235/416868
@@ -141,3 +143,6 @@ fi
 # Extract tar.gz from a file/URL
 curl -L https://github.com/istio/fortio/releases/download/v1.1.0/fortio-linux_x64-1.1.0.tgz \
  | sudo tar -C / -xvzpf -
+ 
+# Search download and extract 
+curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz - 
