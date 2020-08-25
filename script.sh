@@ -146,3 +146,30 @@ curl -L https://github.com/istio/fortio/releases/download/v1.1.0/fortio-linux_x6
  
 # Search download and extract 
 curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz - 
+
+
+# Traverse through directories and run some command
+# -------------------------------------------------
+
+success=0
+failures=0
+# for all dir ~/test/**/
+for d in ~/test/*/; do
+  echo -n "$(basename "$d")… "
+  diff=$(diff -U 0 "$d""expected.txt" <(./dependency-tree-diff.main.kts "$d""old.txt" "$d""new.txt"))
+  if [[ $? == 0 ]]; then
+    echo "✅"
+    success=$((success + 1))
+  else
+    echo "🚫"
+    echo "$diff"
+    echo
+    failures=$((failures + 1))
+  fi
+done
+
+echo
+echo "$((success + failures)) tests, $success pass, $failures fail"
+if [[ $failures != 0 ]]; then
+  exit 1
+fi
