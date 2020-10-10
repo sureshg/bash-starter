@@ -5,7 +5,7 @@
 # Can also use the below command for streaming download and extract
 # $ curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz -
 
-set -eu
+set -euo pipefail
 
 jdk_version=${1:-loom}
 case "$OSTYPE" in
@@ -34,5 +34,12 @@ cat "$openjdk_file" | tar xv -
 jdk_dir=$(tar -tzf "$openjdk_file" | head -3 | tail -1 | cut -f2 -d"/")
 echo "$jdk_version openjdk dir: $jdk_dir"
 
-# $ sdk i java jdk-16-loom ./jdk-16.jdk
+echo "Deleting $openjdk_file"
+rm -f "$openjdk_file"
+
+# $ sdk rm java jdk-16-loom
+# $ sdk i java jdk-16-loom ./jdk-16.jdk/Contents/Home
 # $ sdk u java jdk-16-loom
+# $ sdk e init
+# $ sdk ls java
+# $ sdk c java

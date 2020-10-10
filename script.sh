@@ -2,6 +2,7 @@
 
 # Bash Options
 # http://tldp.org/LDP/abs/html/options.html
+# https://wizardzines.com/comics/bash-errors/
 # -a	allexport	Export all defined variables
 # -e	errexit	Abort script at first error, when a command exits with non-zero status
 # -f	noglob	Filename expansion (globbing) disabled
@@ -9,15 +10,16 @@
 # -v	verbose	Print each command to stdout before executing it
 # -x	xtrace	Similar to -v, but expands commands
 # -n	noexec	Read commands in script, but do not execute them (syntax check)
+# -o pipefail Fail the whole pipeline in case of any error.
 # Eg: set -eux
-set -eu
+set -euo pipefail
 
 # Program name and directory.
 # http://tldp.org/LDP/abs/html/internalvariables.html
 prog="$0"
 progdir=$(dirname "${prog}")
 # Get the absolute path
-abs_path=$(realpath ${prog})
+abs_path=$(realpath "${prog}")
 
 ## Set mydir to the directory containing the script
 ## The ${var%pattern} format will remove the shortest match of
