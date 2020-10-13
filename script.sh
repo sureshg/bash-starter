@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Bash Options
 # http://tldp.org/LDP/abs/html/options.html

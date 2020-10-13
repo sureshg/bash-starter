@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Usage: ./openjdk-ea.sh [loom | 16 | 17 | ..]
+# Usage: ./openjdk-ea.sh [ loom | valhalla | panama | 16 | 17 | 18 | ...]
 #
 # Can also use the below command for streaming download and extract
 # $ curl -sSL https://jdk.java.net/loom | grep -m1 -Eioh "https:.*osx-x64_bin.tar.gz" | xargs curl | tar xvz -
