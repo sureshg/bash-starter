@@ -12,6 +12,7 @@
 # -n	noexec	Read commands in script, but do not execute them (syntax check)
 # -o pipefail Fail the whole pipeline in case of any error.
 # Eg: set -eux
+# Similar to "bash --noprofile --norc -e -o pipefail {0}"
 set -euo pipefail
 
 # Program name and directory.
@@ -185,3 +186,11 @@ function box() {
  -${s//?/-}-"
   tput sgr 0
 }
+
+# Kotlin Script utilities
+kts_file=$0
+kts_dir="$(cd $(dirname "$0") >/dev/null; pwd -P)"
+kts_code="$(sed -e '1,/^!#$/d' "$0")" "${@:1}"
+# Copy the content after 17th line.
+# sed -n -e '17,$p' < "$0" > tmp.$0
+# echo "$(cd "$(dirname "$1")" && pwd -P)/$(basename "$1")"
